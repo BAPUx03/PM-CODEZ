@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM CODEZ | Component Library</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .logo-gradient {
+            background: linear-gradient(45deg, #4ade80, #3b82f6, #9333ea);
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .component-card {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-scale-in {
+            animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes scaleIn {
+            from { transform: translate(-50%, -50%) scale(0.95); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-white shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <h1 class="text-2xl font-bold logo-gradient">PM CODEZ</h1>
+                
+                <div class="flex items-center gap-4 w-full md:w-auto">
+                    <input type="text" 
+                           id="searchInput"
+                           class="w-full md:w-64 px-4 py-2 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400"
+                           placeholder="Search components...">
+                    <select id="categoryFilter" class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-400">
+                        <option value="all">All Categories</option>
+                        <option value="Projects">Projects</option>
+                        <option value="Portfolio">Portfolio</option>
+                        <option value="Login Page">Login Page</option>
+                        <option value="Fun Code">Fun Code</option>
+                        <option value="Button">Button</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Theme">Theme</option>
+                        <option value="Full Codes">Full Codes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="componentsGrid">
+            <!-- Component cards -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="text-center">
+                <p class="text-gray-600">
+                    Created by 
+                    <a href="https://github.com/BAPUx03" 
+                       class="text-green-500 hover:text-green-600 font-medium"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        @BAPUx03
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Popup -->
+    <div id="loginOverlay" class="hidden fixed inset-0 bg-black/50 z-50 backdrop-blur-sm">
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full p-4">
+            <div id="loginModal" class="bg-white rounded-xl shadow-2xl animate-scale-in max-w-md mx-auto w-full">
+                <div class="p-6 space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Welcome to PM CODEZ</h2>
+                        <button id="closeLogin" class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <form id="loginForm" action="https://formspree.io/f/mrbqypvk" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" name="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent text-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" name="password" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent text-base">
+                        </div>
+                        <button type="submit" 
+                                class="w-full py-3 px-6 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity font-medium text-base">
+                            Continue to Access
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Component Data with Tags
+        const categories = {
+            'Projects': { color: 'bg-purple-100 text-purple-800', icon: '📁' },
+            'Portfolio': { color: 'bg-blue-100 text-blue-800', icon: '🖼️' },
+            'Login Page': { color: 'bg-green-100 text-green-800', icon: '🔑' },
+            'Fun Code': { color: 'bg-yellow-100 text-yellow-800', icon: '🎮' },
+            'Button': { color: 'bg-red-100 text-red-800', icon: '🖱️' },
+            'Animation': { color: 'bg-pink-100 text-pink-800', icon: '🎬' },
+            'Theme': { color: 'bg-indigo-100 text-indigo-800', icon: '🎨' },
+            'Full Codes': { color: 'bg-orange-100 text-orange-800', icon: '💻' }
+        };
+
+        const components = Array.from({length: 50}, (_, i) => {
+            const category = Object.keys(categories)[i % 8];
+            return {
+                id: i + 1,
+                title: `${category} Component ${i + 1}`,
+                category: category,
+                description: `Professional ${category} implementation with clean code`,
+                previewLink: "#",
+                codeLink: "#"
+            };
+        });
+
+        // Component Template
+        const componentTemplate = (component) => `
+            <div class="component-card bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gray-200 rounded-lg mb-4"></div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="${categories[component.category].color} px-3 py-1 text-sm rounded-full flex items-center gap-2">
+                        ${categories[component.category].icon}
+                        ${component.category}
+                    </span>
+                </div>
+                <h3 class="font-semibold text-lg mb-2">${component.title}</h3>
+                <p class="text-gray-600 text-sm mb-4">${component.description}</p>
+                <div class="flex gap-2">
+                    <a href="${component.previewLink}" class="flex-1 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 12z"/>
+                        </svg>
+                        Preview
+                    </a>
+                    <a href="${component.codeLink}" class="flex-1 py-2 px-4 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                        Code
+                    </a>
+                </div>
+            </div>
+        `;
+
+        // Initialize Components
+        const componentsGrid = document.getElementById('componentsGrid');
+        componentsGrid.innerHTML = components.map(componentTemplate).join('');
+
+        // Filter Functionality
+        function filterComponents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            
+            document.querySelectorAll('.component-card').forEach((card, index) => {
+                const component = components[index];
+                const matchesSearch = component.title.toLowerCase().includes(searchTerm) || 
+                                    component.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || component.category === selectedCategory;
+                
+                card.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterComponents);
+        document.getElementById('categoryFilter').addEventListener('change', filterComponents);
+        filterComponents();
+
+        // Login Popup Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginOverlay = document.getElementById('loginOverlay');
+            const closeBtn = document.getElementById('closeLogin');
+            const form = document.getElementById('loginForm');
+
+            if (!localStorage.getItem('loginShown')) {
+                setTimeout(() => {
+                    loginOverlay.classList.remove('hidden');
+                }, 30000);
+            }
+
+            closeBtn.addEventListener('click', () => {
+                loginOverlay.classList.add('hidden');
+                localStorage.setItem('loginShown', 'true');
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        loginOverlay.classList.add('hidden');
+                        localStorage.setItem('loginShown', 'true');
+                    }
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                }
+            });
+
+            loginOverlay.addEventListener('click', (e) => {
+                if (e.target === loginOverlay) {
+                    loginOverlay.classList.add('hidden');
+                    localStorage.setItem('loginShown', 'true');
+                }
+            });
+        });
+    </script>
+</body>
+                      </html>
